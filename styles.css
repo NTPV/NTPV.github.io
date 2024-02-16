@@ -1,0 +1,62 @@
+h1 {
+  color: red;
+}
+h2 {
+  color: blue;
+}
+h3 {
+  color: orange;
+}
+h3 {
+  color: orange;
+}
+h4 {
+  color: orange;
+}
+h5 {
+  color: orange;
+}
+p {
+  color: green;
+}
+p,
+li {
+  color: green;
+}
+li {
+  list-style-type: "\1F44D";
+}
+.special {
+  color: orange;
+  font-weight: bold;
+}
+.special2 {
+  color: blue;
+  font-weight: bold;
+}
+li em {
+  color: rebeccapurple;
+}
+h1 + p {
+  font-size: 200%;
+}
+p soft {
+	color: pink;
+}
+a:link {
+  color: pink;
+}
+
+a:visited {
+  color: gray;
+  font-weight: bold
+}
+a:hover {
+  text-decoration: none;
+  font-weight: bold
+}
+body h1 + p .special {
+  color: yellow;
+  background-color: black;
+  padding: 5px;
+}
