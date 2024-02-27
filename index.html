@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
 	<link rel="stylesheet" href="styles/styles.css" />
-    <meta charset="utf-8" />
+	<link rel="stylesheet" href="scripts/main.js" />
     <title>Начало работы с CSS</title>
   </head>
 
@@ -14,9 +14,270 @@
        Это <soft> абзац</soft>. В нём есть <span class="special"> элемент </span>  <span class="special2">span </span>, а также
       <a href="http://example.com">ссылка</a>.
     </p>
+	<p>С автором статьи можно связаться:</p>
+	
+	<blockquote>
+	
+  <p>
+    Ваша работа заполнит большую часть жизни и единственный способ быть
+    полностью довольным — делать то, что по-вашему является великим делом.
+    И единственный способ делать великие дела — любить то, что вы делаете.
+  </p>
+  
+	<p>
+  Великая актриса Фаина Раневская часто говорила:
+  <q>
+    Жизнь слишком коротка, чтобы тратить её на диеты, жадных мужчин и плохое
+    настроение.
+  </q>
+	
+	<p>
+  Великая актриса Фаина Раневская часто говорила:
+  <q cite="https://www.soyuz.ru/articles/889">
+    Жизнь слишком коротка, чтобы тратить её на диеты, жадных мужчин и плохое
+    настроение.
+  </q>
+</p>
+	
+	<address>
+  432000<br>
+  г. Ульяновск<br>
+  ул. Ленина, д. 34
+</address>
 
+<p>
+  Кабанов <i>(вздыхая в сторону)</i>. Ах ты, гddd!
+  <i>(Матери.)</i> Да смеем ли мы, маменька, подумать!
+</p>
+
+...
+  <p dir="ltr">Пример русского текста с верно установленным направлением.</p>
+  <p dir="rtl">Пример русского текста с неверно установленным направлением.</p>
+
+  <hr />
+
+  <p>هذه الفقرة باللغة العربية ولكن بشكل خاطئ من اليسار إلى اليمين.</p>
+  <p dir="auto">هذه الفقرة باللغة العربية ، لذا يجب الانتقال من اليمين إلى اليسار.</p>
+...
+
+<div class="container">
+  <p>
+    Мы поместили текст в <code>&lt;div&gt;</code>,
+    а сам контейнер покрасили в оранжевый.
+  </p>
+</div>
+
+</p>
+
+<h4>Список дел</h4>
+<ul>
+  <li>Помыть посуду</li>
+  <li>Полить цветы</li>
+  <li>
+    <ins>Погулять с собакой</ins>
+  </li>
+  <li>
+    <ins>Пропылесосить комнату</ins>
+  </li>
+</ul>
+
+
+<h4>Сдача проекта</h4>
+<ul>
+  <li>
+    <del>
+      Созвониться с подрядчиком по поводу актов
+    </del>
+  </li>
+  <li>
+    <ins cite="https://our-cool-customers.com/reports/upload">
+      Выгрузить отчёт в сервис заказчика
+    </ins>
+  </li>
+  <li>
+    <ins datetime="2021-12-21T15:00Z">
+      Ещё раз позвонить подрядчику и напомнить про акты
+    </ins>
+  </li>
+</ul>
+
+<form>
+  <label for="city-select">Ваш город</label>
+  <select name="city" id="city-select">
+    <option value="">-- Выберите город --</option>
+    <option value="petersburg">Санкт-Петербург</option>
+    <option value="samara">Самара</option>
+    <option value="perm">Пермь</option>
+    <option value="novosibirsk">Новосибирск</option>
+  </select>
+</form>
+
+</blockquote>
+
+<address>
+  По эл. почте: <a href="mailto:article@auth.or">article@auth.or</a><br>
+  По телефону: <a href="tel:+77778889900">+7(777)888-99-00</a>
+</address>
     <p>Это второй абзац. Он содержит <em>акцентирующий</em> текст.</p>
+	
+	<fieldset>
+  <legend>Заголовок для группы</legend>
+  …
+</fieldset>
+	
+	
+	<input type="text" inputmode="numeric">
 
+<textarea inputmode="text"></textarea>
+
+
+<ol>
+  <li value="5">Номер 5</li>
+  <li>Номер 6</li>
+  <li>Номер 7</li>
+</ol>
+
+<form>
+  <label>
+    Название лучшего справочника по вебу:
+    <input type="text" value="Дока">
+  </label>
+  <button type="submit">Соглашусь!</button>
+</form>
+
+<form>
+  <label>
+    Соглашаетесь с нашими правилами?
+    <input type="checkbox" name="agreement">
+  </label>
+  <button type="submit" value="Нет!" name="diversion">Соглашаюсь</button>
+</form>
+
+<ul>
+  <li>
+    <data value="item001">Модный телефон</data>
+  </li>
+  <li>
+    <data value="item002">Нужный компьютер</data>
+  </li>
+  <li>
+    <data value="item003">Классный телефон</data>
+  </li>
+  <li>
+    <data value="item004">Удобный телефон</data>
+  </li>
+  <li>
+    <data value="item005">Нормальный телефон</data>
+  </li>
+</ul>
+
+<map name="doka-label">
+  <area
+  shape="rect"
+  coords="40,20,420,130"
+  href="/html/"
+  alt="Раздел HTML">
+</map>
+<img
+  src="https://doka.guide/html/map/images/doka-map.svg"
+  usemap="#doka-label"
+  alt="Мордочка собаки с ушами, носом, ртом и сердечками вместо глаз."
+>
+	
+<map name="catalog">
+  <area shape="rect" coords="393,193,2,0"
+  href="https://ru.wikipedia.org/wiki/ВАЗ-2107" target="_blank" alt="Машина">
+  <area shape="poly" coords="427,47,427,124,474,208,659,149,659,59,601,0"
+  href="https://ru.wikipedia.org/wiki/Мыло" target="_blank" alt="Мыло">
+  <area shape="circle" coords="751,109,58"
+  href="https://ru.wikipedia.org/wiki/Пять_рублей" target="_blank" alt="Монета">
+</map>
+<img usemap="#catalog">
+
+
+<figure>
+  <figcaption>Привет, я Алиса</figcaption>
+  <audio controls src="hi-alice.mp3">
+    Ваш браузер не поддерживает встроенное аудио. Попробуйте скачать его
+    <a href="hi-alice.mp3" download>по ссылке</a>.
+  </audio>
+</figure>
+
+<p>
+  Капибара победила в выборах с результатом
+  <meter min="3" max="10" value="6"></meter>
+</p>
+
+<label for="progress">Загрузка файла</label>
+<progress id="progress" value="0" max="100"></progress>
+
+<details>
+  <summary>Легенда</summary>
+  <p>Раскрывающийся текст</p>
+</details>
+
+<table>
+  <tr>
+    <td>iPhone 12 Pro</td>
+    <td>$999</td>
+  </tr>
+  <tr>
+    <td>iPhone 12</td>
+    <td>$799</td>
+  </tr>
+  <tr>
+    <td>iPhone 12 mini</td>
+    <td>$699</td>
+  </tr>
+</table>
+	
+	<div class="dots">
+
+<table>
+  <thead>
+    <tr>
+      <th>Место</th>
+      <th>Оценка</th>
+      <th>Название фильма</th>
+      <th>Год выхода</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>9.1</td>
+      <td>Зелёная миля</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>9.1</td>
+      <td>Побег из Шоушенка</td>
+      <td>1994</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>8.6</td>
+      <td>Властелин колец: Возвращение Короля</td>
+      <td>2003</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+<hr />
+<table>
+  <caption>Сводная таблица лайков</caption>
+  ...
+</table>
+
+<script>
+  document.write("Мой первый код на JavaScript 🥳")
+</script>
+<noscript>Прости, твой браузер не поддерживает JavaScript ☹️</noscript>
+<div data-symbol="〷◠‿◠〷"></div>
+
+<hr />
     <ul>
       <li>Элемент один</li>
       <li class="special">Элемент два</li>
@@ -59,9 +320,41 @@
 	<p>
 	<a href="https://en.wikipedia.org/wiki/Violet-backed_starling">Ссылка на статью о птичке в википедии</a>
 	</p>
+	
+	<fieldset class="snow-toggle">
+  <legend class="snow-toggle__label">Переключатель осадков</legend>
+  <label class="snow-toggle__item">
+    <input class="snow-toggle__control" type="radio" name="snow" value="snowfall" checked>
+    <span class="snow-toggle__text">Снег</span>
+  </label>
+  <label class="snow-toggle__item">
+    <input class="snow-toggle__control" type="radio" name="snow" value="none">
+    <span class="snow-toggle__text">Без осадков</span>
+  </label>
+</fieldset>
+
+	<div class="snow">
+  <div class="snow__flake">﹡</div>
+  <div class="snow__flake">﹡</div>
+  <div class="snow__flake">﹡</div>
+  <div class="snow__flake">﹡</div>
+  <div class="snow__flake">﹡</div>
+  …
+</div>
+
 
 
 
   </body>
 </html>
 </html>
+
+<section class="table-of-contents">
+  <h1 class="title">Оглавление</h1>
+  <h2 class="chapter">HTML и CSS</h2>
+  <h2 class="chapter">Создание стилей и таблиц стилей</h2>
+  <h2 class="chapter">Селекторы: выбор форматируемых элементов</h2>
+  <h2 class="chapter change-value">Механизм наследования стилей</h2>
+  <h2 class="chapter">Управление сложной структурой стилей: каскад</h2>
+  <h2 class="chapter">Поля, отступы, границы</h2>
+</section>
