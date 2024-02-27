@@ -5,15 +5,18 @@ h2 {
   color: blue;
 }
 h3 {
-  color: orange;
+  color: purple;
 }
 h3 {
-  color: orange;
+  color: skyblue;
 }
 h4 {
   color: orange;
 }
 h5 {
+  color: pink;
+}
+h6 {
   color: orange;
 }
 p {
@@ -59,4 +62,132 @@ body h1 + p .special {
   color: yellow;
   background-color: black;
   padding: 5px;
+}
+.dots-icon {
+  animation: animation 3s infinite alternate;
+}
+
+@keyframes animation {
+  from {
+    fill: red;
+  }
+  to {
+    fill: green;
+  }
+}
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 50px;
+  background-color: #18191c;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+}
+
+.snow-toggle {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  gap: 40px;
+  border: 0;
+}
+
+.snow-toggle__label {
+  padding-bottom: 10px;
+}
+
+.snow-toggle__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.snow-toggle__text::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(50% - 12px);
+  width: 25px;
+  height: 25px;
+  border: 1px solid #FFFFFF;
+  border-radius: 50%;
+}
+
+.snow-toggle__control {
+  width: 25px;
+  height: 25px;
+  opacity: 0;
+  margin-right: 15px;
+}
+
+.snow-toggle__control:focus + .snow-toggle__text::before {
+  border-color: #C56FFF;
+}
+
+.snow-toggle__control:checked + .snow-toggle__text::before {
+  background-color: #FFFFFF;
+  background: radial-gradient(
+    circle,
+    #FFFFFF 0%,
+    #FFFFFF 40%,
+    transparent 50%,
+    transparent 100%
+  );
+}
+
+.snow {
+  --animation-name: snowfall;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.snow__flake {
+  position: relative;
+  top: -1.5em;
+  color: #c1dcec;
+  animation-name: var(--animation-name);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(calc(100vh + 1.5em));
+  }
+}
+
+.container {
+  background-color: #FF8630;
+  padding: 55px 80px;
+}
+
+[data-symbol]::before {
+  content: attr(data-symbol)
+}
+
+li {
+  counter-set: example 25;
 }
