@@ -1,3 +1,30 @@
+function showHouses(year) {
+    // Получаем все карточки домов
+    const houses = document.querySelectorAll('.col-1');
+
+    // Скрываем все карточки
+    houses.forEach(house => {
+        house.style.display = 'none';
+    });
+
+    // Проверяем, если год 2025, показываем все карточки
+    if (year == 2000) {
+        houses.forEach(house => {
+            house.style.display = 'block';
+        });
+    } else {
+        // Показываем карточки, соответствующие выбранному году
+        houses.forEach(house => {
+            if (house.getAttribute('data-year') == year) {
+                house.style.display = 'block';
+            }
+        });
+    }
+}
+
+// Инициализация: показываем карточки для 2021 года по умолчанию
+showHouses(2000);
+
 function readFileAsString(e, t) {
     var n = new FileReader;
     n.onload = function() {
