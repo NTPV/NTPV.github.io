@@ -217,9 +217,104 @@
 	
 	
 
-    <div class="separator" aria-hidden="true"><em></em></div>
+    
 	
-	
+	<div class="flex flex-center gap-xs margin-bottom-md">
+      <div class="btns btns--icons js-style-icons">
+        <div>
+          <input type="radio" name="radio-icon-style" id="radio-icon-style-outline" checked value="outline">
+
+          <label class="btns__btn" for="radio-icon-style-outline" data-tooltip="Style: Outline">
+            <svg class="icon icon--2xs" viewBox="0 0 12 12">
+              <title>Outline</title>
+              <g fill="currentColor">
+                <circle cx="6" cy="6" r="5.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+              </g>
+            </svg>
+          </label>
+        </div>
+      
+        <div>
+          <input type="radio" name="radio-icon-style" id="radio-icon-style-fill" value="fill">
+
+          <label class="btns__btn" for="radio-icon-style-fill" data-tooltip="Style: Fill">
+            <svg class="icon icon--2xs" viewBox="0 0 12 12">
+              <title>Fill</title>
+              <g fill="currentColor">
+                <circle cx="6" cy="6" r="5.25" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+              </g>
+            </svg>
+          </label>
+        </div>
+      </div>
+
+      <div class="btns btns--text">
+        <div>
+          <input type="radio" name="radio-icon-size" id="radio-icon-size-24" value="24">
+          <label class="btns__btn" for="radio-icon-size-24" data-tooltip="Size: 24px">24</label>
+        </div>
+
+        <div>
+          <input type="radio" name="radio-icon-size" id="radio-icon-size-32" value="32" checked>
+          <label class="btns__btn" for="radio-icon-size-32" data-tooltip="Size: 32px">32</label>
+        </div>
+
+        <div>
+          <input type="radio" name="radio-icon-size" id="radio-icon-size-48" value="48">
+          <label class="btns__btn" for="radio-icon-size-48" data-tooltip="Size: 48px">48</label>
+        </div>
+      </div>
+
+      <div class="select inline-block" style="--select-icon-size: 10px;">
+        <select class="select__input btn btn--subtle js-category-selector" name="select-category" id="select-category">
+          <optgroup label="Categories">
+            <option value="all">All Categories</option>
+            <option value="accessibility">Accessibility</option>
+            <option value="animals-nature">Animals/Nature</option>
+            <option value="arrows">Arrows</option>
+            <option value="business-finance">Business/Finance</option>
+            <option value="design-development">Design/Development</option>
+            <option value="emoji">Emoji</option>
+            <option value="energy-environment">Energy/Environment</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="family-kids">Family/Kids</option>
+            <option value="farming-gardening">Farming/Gardening</option>
+            <option value="fashion-beauty">Fashion/Beauty</option>
+            <option value="files-folders">Files/Folders</option>
+            <option value="food">Food</option>
+            <option value="gaming">Gaming</option>
+            <option value="healthcare-medical">Healthcare/Medical</option>
+            <option value="holidays">Holidays</option>
+            <option value="home-buildings">Home/Buildings</option>
+            <option value="loaders">Loaders</option>
+            <option value="love-romance">Love/Romance</option>
+            <option value="maps-location">Maps/Location</option>
+            <option value="military-war">Military/War</option>
+            <option value="photography-video">Photography/Video</option>
+            <option value="real-estate">Real Estate</option>
+            <option value="school-education">School/Education</option>
+            <option value="shopping">Shopping</option>
+            <option value="signs-symbols">Signs/Symbols</option>
+            <option value="sound-music">Sounds/Music</option>
+            <option value="sport">Sport</option>
+            <option value="technology">Technology</option>
+            <option value="text-editing">Text Editing</option>
+            <option value="touch-gestures">Touch Gestures</option>
+            <option value="transportation">Transportation</option>
+            <option value="travel">Travel</option>
+            <option value="ui-layout">UI/Layout</option>
+            <option value="users">Users</option>
+            <option value="weather">Weather</option>
+          </optgroup>
+        </select>
+        
+        <svg class="icon select__icon" viewBox="0 0 10 10">
+          <g fill="currentColor">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.5 3.75L5 7.25l-3.5-3.5"></path>
+          </g>
+        </svg>
+      </div>
+    </div>
 	
 	
 	<div>
