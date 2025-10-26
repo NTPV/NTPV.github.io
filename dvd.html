@@ -34,220 +34,116 @@
 <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Подключение D3.js -->
 
 <script>
-    // Определение узлов графа
     const nodes = [
-        { id: 'Заметка 1' }, // Узел 1
-        { id: 'Заметка 2' }, // Узел 2
-        { id: 'Заметка 3' }, // Узел 3
-        { id: 'Заметка 4' }, // Узел 4
-        { id: 'Заметка 5' }  // Узел 5
+        { id: 'Repo1', link: 'https://github.com/igsekor/Repo1' },
+        { id: 'Repo2', link: 'https://github.com/igsekor/Repo2' },
+        { id: 'Repo3', link: 'https://github.com/igsekor/Repo3' },
+        { id: 'Repo4', link: 'https://github.com/igsekor/Repo4' },
+        { id: 'Repo5', link: 'https://github.com/igsekor/Repo5' }
+        // Добавьте другие репозитории по необходимости
     ];
 
-    // Определение связей между узлами
     const links = [
-        { source: 'Заметка 1', target: 'Заметка 2' }, // Связь между узлом 1 и узлом 2
-        { source: 'Заметка 2', target: 'Заметка 3' }, // Связь между узлом 2 и узлом 3
-        { source: 'Заметка 1', target: 'Заметка 4' }, // Связь между узлом 1 и узлом 4
-        { source: 'Заметка 3', target: 'Заметка 5' }, // Связь между узлом 3 и узлом 5
-        { source: 'Заметка 4', target: 'Заметка 5' }  // Связь между узлом 4 и узлом 5
+        { source: nodes[0], target: nodes[1] },
+        { source: nodes[1], target: nodes[2] },
+        { source: nodes[2], target: nodes[3] },
+        { source: nodes[3], target: nodes[4] },
+        // Добавьте дополнительные связи по необходимости
     ];
 
-    const svg = d3.select("svg"); // Выбор элемента SVG на странице
-    const width = window.innerWidth; // Получение ширины окна браузера
-    const height = window.innerHeight; // Получение высоты окна браузера
+    async function createGraph() {
+        const svg = d3.select("svg");
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-    // Добавление зеленого поля в левом верхнем углу
-    const greenAreaWidth = width * 0.1; // Ширина зеленого поля
-    const greenAreaHeight = height * 0.1; // Высота зеленого поля
+        svg.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", width * 0.1)
+            .attr("height", height * 0.1)
+            .attr("fill", "rgba(0, 128, 0, 0.4)");
 
-    svg.append("rect")
-        .attr("x", 0) // Позиция по X
-        .attr("y", 0) // Позиция по Y
-        .attr("width", greenAreaWidth) // Ширина 10% от ширины окна
-        .attr("height", greenAreaHeight) // Высота 10% от высоты окна
-        .attr("fill", "rgba(0, 128, 0, 0.4)"); // Цвет заливки (зеленый) с 40% прозрачностью
+        const simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink().id(d => d.id).distance(100))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", d3.forceCenter(width / 2, height / 2));
 
-    // Настройка физической симуляции графа
-    const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink().id(d => d.id).distance(100)) // Настройка силы связи с расстоянием
-        .force("charge", d3.forceManyBody().strength(-300)) // Настройка силы отталкивания между узлами
-        .force("center", d3.forceCenter(width / 2, height / 2)); // Центрирование графа
+        const link = svg.append("g")
+            .attr("class", "links")
+            .selectAll(".link")
+            .data(links)
+            .enter().append("line")
+            .attr("class", "link");
 
-    // Добавление линий связей в граф
-    const link = svg.append("g")
-        .attr("class", "links") // Класс для группировки линий
-        .selectAll(".link")
-        .data(links) // Привязка данных связей
-        .enter().append("line") // Создание линий
-        .attr("class", "link"); // Присвоение класса для стилей
+        const node = svg.append("g")
+            .attr("class", "nodes")
+            .selectAll(".node")
+            .data(nodes)
+            .enter().append("g")
+            .attr("class", "node")
+            .call(d3.drag() 
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
 
-    // Добавление узлов в граф
-    const node = svg.append("g")
-        .attr("class", "nodes") // Класс для группировки узлов
-        .selectAll(".node")
-        .data(nodes) // Привязка данных узлов
-        .enter().append("g") // Создание группы для каждого узла
-        .attr("class", "node") // Присвоение класса для стилей узлов
-        .call(d3.drag() // Добавление возможности перетаскивания узлов
-            .on("start", dragstarted) // Обработчик начала перетаскивания
-            .on("drag", dragged) // Обработчик во время перетаскивания
-            .on("end", dragended)); // Обработчик окончания перетаскивания
+        node.append("circle")
+            .attr("r", 10)
+            .attr("fill", "#69b3a2"); // Установите фиксированный цвет (если необходимо)
 
-    // Добавление круга для каждого узла
-    node.append("circle")
-        .attr("r", 10); // Радиус круга (узла)
+        node.append("text")
+            .attr("dy", 3)
+            .attr("x", 12)
+            .text(d => d.id);
 
-    // Добавление текста для каждого узла
-    node.append("text")
-        .attr("dy", 3) // Вертикальное смещение текста
-        .attr("x", 12) // Положение текста по оси X
-        .text(d => d.id); // Отображение идентификатора узла
+        simulation
+            .nodes(nodes)
+            .on("tick", ticked);
 
-    // Запуск симуляции
-    simulation
-        .nodes(nodes) // Привязка узлов к симуляции
-        .on("tick", ticked); // Обработчик для обновления на каждом "тик" симуляции
+        simulation.force("link").links(links);
 
-    // Привязка связей к симуляции
-    simulation.force("link")
-        .links(links); // Привязка связей к симуляции
+        function ticked() {
+            link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
 
-   // Функция для проверки узлов в зеленом поле и удаления их
-function checkNodesInGreenArea() {
-    const nodesToRemove = []; // Массив для хранения узлов, которые нужно удалить
-
-    node.each(function(d) {
-        const x = d.x; // Получение координаты X узла
-        const y = d.y; // Получение координаты Y узла
-
-        // Проверка, находится ли узел в зеленом поле
-        if (x >= 0 && x <= greenAreaWidth && y >= 0 && y <= greenAreaHeight) {
-            nodesToRemove.push(d); // Добавляем узел в массив, если он в поле
+            node.attr("transform", d => `translate(${d.x},${d.y})`);
+            checkNodesInGreenArea();
         }
-    });
 
-    // Удаляем узлы и их связи
-    nodesToRemove.forEach(d => {
-        d3.selectAll(".node")
-            .filter(nodeData => nodeData.id === d.id)
-            .remove(); // Удаляем узел
+        function checkNodesInGreenArea() {
+            node.each(function(d) {
+                const x = d.x;
+                const y = d.y;
 
-        // Удаление связей, связанных с узлом
-        link.filter(l => l.source.id === d.id || l.target.id === d.id)
-            .remove(); // Удаляем связь
-    });
+                if (x >= 0 && x <= width * 0.1 && y >= 0 && y <= height * 0.1) {
+                    window.open(d.link, '_blank');
+                }
+            });
+        }
 
-    // Обновляем граф
-    const remainingNodes = nodes.filter(nodeData => !nodesToRemove.includes(nodeData)); // Узлы, которые остались
-    const remainingLinks = links.filter(l =>
-        remainingNodes.includes(l.source) && remainingNodes.includes(l.target)
-    ); // Связи, которые остались
+        function dragstarted(event) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            const draggedNode = event.subject;
+            draggedNode.fx = draggedNode.x;
+            draggedNode.fy = draggedNode.y;
+        }
 
-    // Поиск связанных компонентов
-    const disconnectedComponents = findDisconnectedComponents(remainingNodes, remainingLinks);
+        function dragged(event) {
+            const draggedNode = event.subject;
+            draggedNode.fx = event.x;
+            draggedNode.fy = event.y;
+        }
 
-    // Теперь меняем цвет оставшихся узлов на основании их принадлежности к связным компонентам
-    remainingNodes.forEach(d => {
-        const isConnected = disconnectedComponents.some(component => component.includes(d));
-        d3.selectAll(".node")
-            .filter(nodeData => nodeData.id === d.id)
-            .select("circle")
-            .attr("fill", isConnected ? "#69b3a2" : "#ff0000"); // Зелёный для связанных, красный для несоединённых
-    });
-
-    // Обновляем симуляцию
-    simulation.nodes(remainingNodes);
-    simulation.force("link").links(remainingLinks);
-}
-
-// Функция для поиска связанных компонентов
-function findDisconnectedComponents(nodes, links) {
-    const components = [];
-    const visited = new Set();
-
-    function dfs(node, component) {
-        component.push(node);
-        visited.add(node);
-
-        links.forEach(link => {
-            const nextNode = link.source.id === node.id ? link.target : link.target.id === node.id ? link.source : null;
-            if (nextNode && !visited.has(nextNode)) {
-                dfs(nextNode, component);
-            }
-        });
+        // Освобождение фиксированной позиции после завершения перетаскивания
+        function dragended(event) {
+            const draggedNode = event.subject;
+            if (!event.active) simulation.alphaTarget(0);
+            draggedNode.fx = null;
+            draggedNode.fy = null;
+        }
     }
 
-    nodes.forEach(node => {
-        if (!visited.has(node)) {
-            const component = [];
-            dfs(node, component);
-            components.push(component);
-        }
-    });
-
-    return components;
-}
-
-
-    // Функция для обновления координат узлов и связей во время симуляции
-    function ticked() {
-        link
-            .attr("x1", d => d.source.x) // Установка координат начала линии
-            .attr("y1", d => d.source.y) // Установка координат начала линии
-            .attr("x2", d => d.target.x) // Установка координат конца линии
-            .attr("y2", d => d.target.y); // Установка координат конца линии
-
-        node
-            .attr("transform", d => `translate(${d.x},${d.y})`); // Перемещение узлов по координатам
-
-        checkNodesInGreenArea(); // Вызов функции проверки узлов
-
-         const node1 = nodes.find(n => n.id === 'Заметка 1');
-        if (node1) {
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const distance = Math.sqrt((node1.x - centerX) ** 2 + (node1.y - centerY) ** 2);
-
-            // Обновление текстового элемента с расстоянием
-            d3.select("#distance-text")
-                .text(`Расстояние до "Заметка 1": ${distance.toFixed(2)} px`); // Ограничиваем до 2 знаков после запятой
-        }
-
-    };
-
-
-
-   // Функция для обработки перетаскивания узлов
-function dragstarted(event) {
-    if (!event.active) simulation.alphaTarget(0.3).restart(); // Запускает симуляцию, если не активно
-    const draggedNode = event.subject; // Узел, который перетаскивается
-    draggedNode.fx = draggedNode.x; // Фиксация текущей координаты X
-    draggedNode.fy = draggedNode.y; // Фиксация текущей координаты Y
-}
-
-function dragged(event) {
-    const draggedNode = event.subject; // Узел, который перетаскивается
-    draggedNode.fx = event.x; // Обновление фиксированной координаты X узла
-    draggedNode.fy = event.y; // Обновление фиксированной координаты Y узла
-}
-
-function dragended(event) {
-    const draggedNode = event.subject; // Узел, который был перетаскиваем
-    if (!event.active) simulation.alphaTarget(0); // Остановка симуляции, если неактивно
-    draggedNode.fx = null; // Сбрасываем фиксированную координату X узла
-    draggedNode.fy = null; // Сбрасываем фиксированную координату Y узла
-}
-
-
-
-    // Обновить размер при изменении окна
-    window.addEventListener('resize', () => {
-        const width = window.innerWidth; // Получение текущей ширины окна
-        const height = window.innerHeight; // Получение текущей высоты окна
-        simulation.force("center", d3.forceCenter(width / 2, height / 2)); // Центрирование графа
-    });
+    createGraph(); // Создание графа
 </script>
 
 </body>
 </html>
-
