@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Граф с 5 вершинами</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        svg {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<svg width="400" height="400"></svg>
+<button id="download">Скачать граф</button>
+
+<script>
+    const nodes = [
+        { id: 'A', x: 100, y: 100 },
+        { id: 'B', x: 300, y: 100 },
+        { id: 'C', x: 100, y: 300 },
+        { id: 'D', x: 300, y: 300 },
+        { id: 'E', x: 200, y: 200 }
+    ];
+
+    const links = [
+        { source: 'A', target: 'B' },
+        { source: 'A', target: 'C' },
+        { source: 'B', target: 'D' },
+        { source: 'C', target: 'E' },
+        { source: 'D', target: 'E' }
+    ];
+
+    const svg = d3.select('svg');
+
+    // Создание связей
+    links.forEach(link => {
+        const sourceNode = nodes.find(n => n.id === link.source);
+        const targetNode = nodes.find(n => n.id === link.target);
+
+        svg.append('line')
+            .attr('x1', sourceNode.x)
+            .attr('y1', sourceNode.y)
+            .attr('x2', targetNode.x)
+            .attr('y2', targetNode.y)
+            .attr('stroke', '#999')
+            .attr('stroke-opacity', 0.6);
+    });
+
+    // Создание узлов
+    const nodeGroup = svg.selectAll('.node')
+        .data(nodes)
+        .enter()
+        .append('g')
+        .attr('class', 'node')
+        .attr('transform', d => `translate(${d.x},${d.y})`);
+
+    nodeGroup.append('circle')
+        .attr('r', 10)
+        .attr('fill', '#69b3a2');
+
+    nodeGroup.append('text')
+        .attr('dx', 12)
+        .attr('dy', 3)
+        .text(d => d.id);
+
+    // Функция скачивания графа
+    document.getElementById('download').addEventListener('click', () => {
+        const svgData = new XMLSerializer().serializeToString(svg.node());
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const img = new Image();
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+            URL.revokeObjectURL(url);
+            const png = canvas.toDataURL('image/png');
+
+            const a = document.createElement('a');
+            a.href = png;
+            a.download = 'graph.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
+        img.src = url;
+    });
+</script>
+
+</body>
+</html>
