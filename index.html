@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8"> <!-- Устанавливает кодировку страницы на UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Обеспечивает адаптивный дизайн -->
-    <title>Граф в Obsidian</title> <!-- Заголовок страницы -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Граф репозиториев</title>
     <style>
         body {
-            margin: 0; /* Убирает отступы вокруг страницы */
-            overflow: hidden; /* Скрывает скролл */
+            margin: 0;
+            overflow: hidden;
         }
         svg {
-            width: 100vw; /* Задает ширину в 100% от ширины окна */
-            height: 100vh; /* Задает высоту в 100% от высоты окна */
-            display: block; /* Убирает пробелы вокруг SVG */
+            width: 100vw;
+            height: 100vh;
+            display: block;
         }
         .node circle {
-            fill: #69b3a2; /* Цвет заливки узлов (кругов) */
-            stroke: #fff; /* Цвет обводки узлов */
-            stroke-width: 1.5px; /* Толщина обводки узлов */
+            fill: #69b3a2;
+            stroke: #fff;
+            stroke-width: 1.5px;
         }
         .link {
-            fill: none; /* Заливка для линий связей (нет) */
-            stroke: #999; /* Цвет линий связей */
-            stroke-opacity: 0.6; /* Прозрачность линий связей */
+            fill: none;
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+        #distance-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #000;
         }
     </style>
 </head>
 <body>
 
-<svg></svg> <!-- Контейнер для графа -->
-<text id="distance-text" x="50%" y="50%" text-anchor="middle" font-size="24" fill="#000"></text>
+<svg></svg>
+<div id="distance-text"></div>
 
-<script src="https://d3js.org/d3.v7.min.js"></script> <!-- Подключение D3.js -->
-
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
     async function fetchUserRepos(username) {
         const response = await fetch(`https://api.github.com/users/${username}/repos`);
@@ -49,22 +56,15 @@
     }
 
     async function createGraph() {
-        const username = 'igsekor';
-        const nodes = await fetchUserRepos(username); // Получаем репозитории
+        const username = 'NTPV';
+        const nodes = await fetchUserRepos(username);
         const links = nodes.map((node, index) => {
             return index < nodes.length - 1 ? { source: nodes[index], target: nodes[index + 1] } : null;
-        }).filter(link => link); // Создаем связи между узлами
+        }).filter(link => link);
 
         const svg = d3.select("svg");
         const width = window.innerWidth;
         const height = window.innerHeight;
-
-        svg.append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", width * 0.1)
-            .attr("height", height * 0.1)
-            .attr("fill", "rgba(0, 128, 0, 0.4)");
 
         const simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink().id(d => d.id).distance(100))
@@ -91,7 +91,7 @@
 
         node.append("circle")
             .attr("r", 10)
-            .attr("fill", "#69b3a2"); // Фиксированный цвет
+            .attr("fill", "#69b3a2");
 
         node.append("text")
             .attr("dy", 3)
@@ -109,18 +109,6 @@
                 .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
 
             node.attr("transform", d => `translate(${d.x},${d.y})`);
-            checkNodesInGreenArea();
-        }
-
-        function checkNodesInGreenArea() {
-            node.each(function(d) {
-                const x = d.x;
-                const y = d.y;
-
-                if (x >= 0 && x <= width * 0.1 && y >= 0 && y <= height * 0.1) {
-                    window.open(d.link, '_blank');
-                }
-            });
         }
 
         function dragstarted(event) {
@@ -144,9 +132,8 @@
         }
     }
 
-    createGraph(); // Создание графа
+    createGraph();
 </script>
-
 
 </body>
 </html>
